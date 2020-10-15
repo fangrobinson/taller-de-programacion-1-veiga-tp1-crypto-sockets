@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void traducir(char *s, int key, int mult){
+void cesar_traducir(char *s, int key, int mult){
 	unsigned char let;
 	int i;
 	for(i = 0; s[i] != '\0'; ++i){
@@ -12,10 +12,10 @@ void traducir(char *s, int key, int mult){
 }
 
 void cesar_cifrar(char *s, int key){
-	traducir(s, key, 1);
+	cesar_traducir(s, key, 1);
 }
 
 void cesar_descifrar(char *s, int key){
-	traducir(s, key, -1);
+	cesar_traducir(s, key, -1);
 }
 
