@@ -8,10 +8,14 @@ struct VigenereStruct{
 };
 
 vigenere_t crear_vigenere(char *key){
-	vigenere_t v = malloc(sizeof(vigenere_t));
-	if (v == NULL) return v;
+	vigenere_t v = malloc(sizeof(struct VigenereStruct));
+	if (v == NULL) return NULL;
 	v->key_len = strlen(key);
 	v->key = malloc(strlen(key) + 1);
+	if (!v->key) {
+		free(v);
+		return NULL;
+	}
 	strcpy(v->key, key);
 	return v;
 }
@@ -21,13 +25,17 @@ void del_vigenere(vigenere_t v){
 	free(v);
 }
 
+void vigenere_traducir_cambio_letra(vigenere_t v, char *s, int i,int mult){
+	unsigned char string_let = s[i];
+	unsigned char key_let = v->key[i%v->key_len];
+	string_let = (string_let + (key_let * mult))%256;
+	s[i] = string_let;
+}
+
 void vigenere_traducir(vigenere_t v, char *s, int mult){
-	unsigned char let;
 	int i;
 	for(i = 0; s[i] != '\0'; ++i){
-		let = s[i];
-		let = (let + (2 * mult))%256;
-		s[i] = let;
+		vigenere_traducir_cambio_letra(v, s, i, mult);
 	}
 	return;
 }
