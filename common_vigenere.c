@@ -7,10 +7,10 @@ struct VigenereStruct{
 	size_t key_len;
 };
 
-vigenere_t crear_vigenere(char *key){
-	vigenere_t v = malloc(sizeof(struct VigenereStruct));
-	if (v == NULL) return NULL;
+void vigenere_init(vigenere_t v, char *key){
 	v->key_len = strlen(key);
+	v->key = key;
+	/*
 	v->key = malloc(strlen(key) + 1);
 	if (!v->key) {
 		free(v);
@@ -18,11 +18,14 @@ vigenere_t crear_vigenere(char *key){
 	}
 	strcpy(v->key, key);
 	return v;
+	*/
 }
 
 void del_vigenere(vigenere_t v){
+	/*
 	free(v->key);
 	free(v);
+	*/
 }
 
 void vigenere_traducir_cambio_letra(vigenere_t v, char *s, int i,int mult){

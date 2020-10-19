@@ -1,21 +1,29 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void cesar_traducir(char *s, int key, int mult){
+struct CesarStruct{
+	int key;
+};
+
+void cesar_init(cesar_t cesar, char *key){
+	cesar->key = atoi(key);
+}
+
+void cesar_traducir(cesar_t cesar, char *s, int mult){
 	unsigned char let;
 	int i;
 	for(i = 0; s[i] != '\0'; ++i){
 		let = s[i];
-		let = (let + (key * mult))%256;
+		let = (let + (cesar->key * mult))%256;
 		s[i] = let;
 	}
 	return;
 }
 
-void cesar_cifrar(char *s, int key){
-	cesar_traducir(s, key, 1);
+void cesar_cifrar(cesar_t cesar, char *s){
+	cesar_traducir(cesar, s, 1);
 }
 
-void cesar_descifrar(char *s, int key){
-	cesar_traducir(s, key, -1);
+void cesar_descifrar(cesar_t cesar, char *s){
+	cesar_traducir(cesar, s, -1);
 }
-
