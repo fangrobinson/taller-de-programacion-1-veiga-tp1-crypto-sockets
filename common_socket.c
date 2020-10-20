@@ -3,7 +3,7 @@ void socket_init(socket_t *socket){
 
 }
 int socket_uninit(socket_t *socket){
-	return close(self->socket);
+	return close(socket->socket);
 }
 
 
