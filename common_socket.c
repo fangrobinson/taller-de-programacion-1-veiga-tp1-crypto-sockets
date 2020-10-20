@@ -82,7 +82,32 @@ int socket_connect(socket_t *socket, const char *server, unsigned short port){
 }
 
 int socket_accept(socket_t *socket, socket_t *socket_to_accept){
-
+	socket_to_accept->socket = accept(self->socket, NULL, NULL);
+	if (socket_to_accept->socket == -1) {
+		socket_uninit(socket_to_accept);
+		return 1;
+	}
+	return 0;
 }
 
 void socket_shutdown(socket_t *socket);
+
+
+
+int socket_send(socket_t *socket, const char *buffer, size_t length){
+	int bytes_sent = 0;
+	int socket_open = 1;
+
+	while (length >= bytes_sent && socket_open) {
+		int bytes_to_add = send(socket->socket, (buffer + bytes_sent), length - bytes_sent,
+		MSG_NOSIGNAL);
+		if (s > 0){
+			bytes_sent += bytes_to_add;
+		} else {
+			socket_open = 0;
+		}
+	}
+
+	return socket_open;
+}
+
