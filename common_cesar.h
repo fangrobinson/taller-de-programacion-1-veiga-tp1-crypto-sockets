@@ -1,7 +1,9 @@
 #ifndef __CESAR_H__
 #define __CESAR_H__
 
-struct CesarStruct;
+struct CesarStruct{
+	int key;
+};
 
 #ifndef __CESAR_T__
 #define __CESAR_T__

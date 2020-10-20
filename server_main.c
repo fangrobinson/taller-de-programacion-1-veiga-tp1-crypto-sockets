@@ -1,9 +1,8 @@
 #include "server_server.h"
-#include "server_server.c"
+//#include "server_server.c"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//#include "server_server.c"
 
 int main(int argc, char const *argv[])
 {

@@ -1,7 +1,11 @@
 #ifndef __VIGENERE_H__
 #define __VIGENERE_H__
 
-struct VigenereStruct;
+struct VigenereStruct{
+	char *key;
+	size_t key_len;
+};
+
 typedef struct VigenereStruct *vigenere_t;
 
 void vigenere_init(vigenere_t, char *key);

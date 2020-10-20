@@ -2,16 +2,17 @@
 #include <string.h>
 #include "common_vigenere.h"
 
+/*
 struct VigenereStruct{
 	char *key;
 	size_t key_len;
 };
+*/
 
 void vigenere_init(vigenere_t v, char *key){
 	v->key_len = strlen(key);
 	v->key = malloc(strlen(key) + 1);
 	strcpy(v->key, key);
-
 }
 
 void vigenere_uninit(vigenere_t v){
@@ -27,7 +28,7 @@ void vigenere_traducir_cambio_letra(vigenere_t v, char *s, int i, int mult){
 
 void vigenere_traducir(vigenere_t v, char *s, unsigned int s_len, int mult){
 	int i;
-	for (i = 0; i < s_len; ++i){
+	for (i = 0; i < s_len; ++i) {
 		vigenere_traducir_cambio_letra(v, s, i, mult);
 	}
 	return;

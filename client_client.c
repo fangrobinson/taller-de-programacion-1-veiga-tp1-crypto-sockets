@@ -1,11 +1,11 @@
-#include "common_controlador_cifradores.h"
-#include "common_controlador_cifradores.c"
+//#include "common_controlador_cifradores.h"
+//#include "common_controlador_cifradores.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <client_client.h>
+#include "client_client.h"
 
-struct ClientStruct{
+/*struct ClientStruct{
 	char *server;
 	char *port;
 	char *method;
@@ -13,6 +13,7 @@ struct ClientStruct{
 	unsigned int size_of_buffer;
 	cifradores_t cifradores;
 };
+*/
 
 #ifndef __CLIENT_T__
 #define __CLIENT_T__

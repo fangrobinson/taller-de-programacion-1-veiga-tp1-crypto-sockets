@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "common_cesar.h"
 
+/*
 struct CesarStruct{
 	int key;
 };
-
+*/
 #ifndef __CESAR_T__
 #define __CESAR_T__
 typedef struct CesarStruct *cesar_t;
@@ -19,7 +21,7 @@ void cesar_uninit(cesar_t cesar){}
 void cesar_traducir(cesar_t cesar, char *s, unsigned int s_len, int mult){
 	unsigned char let;
 	int i;
-	for (i = 0; i < s_len; ++i){
+	for (i = 0; i < s_len; ++i) {
 		let = s[i];
 		let = (let + (cesar->key * mult))%256;
 		s[i] = let;

@@ -1,16 +1,19 @@
 #include "client_client.h"
-#include "client_client.c"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+//#include "client_client.c"
 
 int main(int argc, char const *argv[])
 {
-	/*
+	
 	printf("server: %s\n", argv[1]);
 	printf("port: %s\n", argv[2]);
 	printf("method: %s\n", argv[3]);
 	printf("key: %s\n", argv[4]);
 	printf("stdin: %s\n", argv[5]);
-	*/
-	
+
+
 	char *server = malloc(strlen(argv[1]) + 1);
 	strcpy(server, argv[1]);
 
@@ -25,14 +28,14 @@ int main(int argc, char const *argv[])
 
 	char *msg = malloc(strlen(argv[5]) + 1);
 	strcpy(msg, argv[5]);
-
+	
 	struct ClientStruct client;
 
 	client_init(&client, server, port, metodo, key);
 	//client_connect(client);
 	client_send_msg(&client, msg);
 	client_uninit(&client);
-
+	
 	free(server);
 	free(port);
 	free(metodo);

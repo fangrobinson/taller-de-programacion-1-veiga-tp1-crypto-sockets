@@ -1,13 +1,20 @@
 #ifndef __SERVER_H__
 #define __SERVER_H__
 
-struct ServerStruct;
+#include "common_controlador_cifradores.h"
+
+struct ServerStruct{
+	char *port;
+	char *method;
+	char *key;
+	unsigned int size_of_buffer;
+	cifradores_t cifradores;
+};
 
 #ifndef __SERVER_T__
 #define __SERVER_T__
 typedef struct ServerStruct *server_t;
 #endif
-
 
 void server_init(server_t server, char *port, char *method, char *key);
 void server_uninit(server_t server);

@@ -2,12 +2,12 @@
 #include <string.h>
 #include "common_arc4.h"
 
-struct Arc4Struct{
+/*struct Arc4Struct{
 	unsigned char s_box[256];
 	unsigned int i, j;
 	char *key;
 	unsigned int key_lenght;
-};
+};*/
 
 void s_box_swap(unsigned char *s, unsigned int i, unsigned int j) {
     unsigned char temp = s[i];
@@ -53,7 +53,7 @@ unsigned char arc4_output(arc4_t arc4) {
 
 void arc4_traducir(arc4_t arc4, char *s, unsigned int s_len) {
 	int i;
-	for (i = 0; i < s_len; ++i){
+	for (i = 0; i < s_len; ++i) {
 		s[i] = (char)(s[i] ^ arc4_output(arc4));
 	}
 }

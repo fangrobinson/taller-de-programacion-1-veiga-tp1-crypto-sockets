@@ -1,7 +1,13 @@
 #ifndef __ARC4_H__
 #define __ARC4_H__
 
-struct Arc4Struct;
+struct Arc4Struct{
+	unsigned char s_box[256];
+	unsigned int i, j;
+	char *key;
+	unsigned int key_lenght;
+};
+
 typedef struct Arc4Struct *arc4_t;
 
 void arc4_init(arc4_t arc4, char *key);

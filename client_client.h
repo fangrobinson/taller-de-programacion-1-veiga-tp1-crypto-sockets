@@ -1,7 +1,16 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 
-struct ClientStruct;
+#include "common_controlador_cifradores.h"
+
+struct ClientStruct{
+	char *server;
+	char *port;
+	char *method;
+	char *key;
+	unsigned int size_of_buffer;
+	cifradores_t cifradores;
+};
 
 #ifndef __CLIENT_T__
 #define __CLIENT_T__

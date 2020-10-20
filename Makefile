@@ -168,4 +168,3 @@ server: $(o_common_files) $(o_server_files)
 
 clean:
 	$(RM) -f $(o_common_files) $(o_client_files) $(o_server_files) client server
-
