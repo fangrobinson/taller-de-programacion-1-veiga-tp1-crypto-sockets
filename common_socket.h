@@ -7,4 +7,7 @@ struct SocketStruct{
 
 typedef struct SocketStruct socket_t;
 
+void socket_init(socket_t *socket);
+int socket_uninit(socket_t *socket);
+
 #endif
