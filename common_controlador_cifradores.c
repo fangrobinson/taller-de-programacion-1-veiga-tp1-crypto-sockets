@@ -6,38 +6,17 @@
 #include "common_arc4.h"
 #include "common_arc4.c"
 
-struct Cifrador {
-	const char *name;
-	void (* func)(void *c, char *s, unsigned int s_len);
-};
-
-void wrapper_cesar_cifrar(void *c, char *s, unsigned int s_len){
-	cesar_cifrar((cesar_t) c, s, s_len);
-}
-
-void wrapper_vigenere_cifrar(void *c, char *s, unsigned int s_len){
-	vigenere_cifrar((vigenere_t) c, s, s_len);
-}
-
-void wrapper_arc4_cifrar(void *c, char *s, unsigned int s_len){
-	arc4_cifrar((arc4_t) c, s, s_len);
-}
-
-
-struct CifradoresStruct{
-	struct Cifrador *cifradores;
-	size_t cantidad_cifradores;
-	char *metodo;
+struct ControladorCifradoresStruct{
 	void *c;
+	char *metodo;
 };
+
+#ifndef __CONTROLADOR_CIFRADOR_T__
+#define __CONTROLADOR_CIFRADOR_T__
+typedef struct ControladorCifradoresStruct *cifradores_t;
+#endif
 
 void controlador_cifradores_init_por_metodo(cifradores_t controlador_cifradores, char *metodo, char *key){
-	/*
-	for (int i  = 0; i < 3; i++){
-		if (strcmp(metodo, cifradores[i].name) == 0){
-			cifradores[i].func(mensaje, key, strlen(key));
-		}
-	}*/
 	if (strcmp(metodo, "--method=cesar") == 0){
 		controlador_cifradores->c = malloc(sizeof(struct CesarStruct));
 		cesar_init((cesar_t) controlador_cifradores->c, key);
@@ -53,47 +32,28 @@ void controlador_cifradores_init_por_metodo(cifradores_t controlador_cifradores,
 }
 
 void controlador_cifradores_uninit_por_metodo(cifradores_t controlador_cifradores, char *metodo){
-	/*
-	for (int i  = 0; i < 3; i++){
-		if (strcmp(metodo, cifradores[i].name) == 0){
-			cifradores[i].func(mensaje, key, strlen(key));
-		}
-	}*/
-	controlador_cifradores->metodo = malloc(sizeof(strlen(metodo)));
-	controlador_cifradores->metodo = strcopy(metodo);
-	if (strcmp(metodo, "--method=cesar") == 0){
-		controlador_cifradores->c = malloc(sizeof(struct CesarStruct));
-		cesar_init((cesar_t) controlador_cifradores->c, key);
+	if (strcmp(metodo, "--method=cesar\0") == 0){
+		cesar_uninit((cesar_t) controlador_cifradores->c);
 	}
-	if (strcmp(metodo, "--method=vigenere") == 0){
-		controlador_cifradores->c = malloc(sizeof(struct VigenereStruct));
-		vigenere_init((vigenere_t) controlador_cifradores->c, key);
+	if (strcmp(metodo, "--method=vigenere\0") == 0){
+		vigenere_uninit((vigenere_t) controlador_cifradores->c);
 	}
-	if (strcmp(metodo, "--method=rc4") == 0){
-		controlador_cifradores->c = malloc(sizeof(struct Arc4Struct));
-		arc4_init((arc4_t) controlador_cifradores->c, key);
+	if (strcmp(metodo, "--method=rc4\0") == 0){
+		arc4_uninit((arc4_t) controlador_cifradores->c);
 	}
 }
 
 
 void controlador_cifradores_init(cifradores_t controlador_cifradores, char *metodo, char *key){
-	/*
-	struct Cifrador *cifradores  = {
-		{"--method=cesar", wrapper_cesar_cifrar},
-		{"--method=vigenere", wrapper_vigenere_cifrar},
-		{"--method=rc4", wrapper_arc4_cifrar},	
-	};
-	controlador_cifradores->cifradores = cifradores;
-	*/
-	controlador_cifradores->c = controlador_cifradores_init_por_metodo(metodo);
+	controlador_cifradores->metodo = malloc(strlen(metodo) + 1);
+	strcpy(controlador_cifradores->metodo, metodo);
+	controlador_cifradores->metodo = metodo;
+	controlador_cifradores_init_por_metodo(controlador_cifradores, metodo, key);
+	
 }
 
-/*
-void cifradores_cifrar_mensaje(char *metodo, char *mensaje, char *key){
-	for (int i  = 0; i < 3; i++){
-		if (strcmp(metodo, cifradores[i].name) == 0){
-			cifradores[i].func(mensaje, key, strlen(key));
-		}
-	}
+void controlador_cifradores_uninit(cifradores_t controlador_cifradores){
+	controlador_cifradores_uninit_por_metodo(controlador_cifradores, controlador_cifradores->metodo);
+	free(controlador_cifradores->c);
+	free(controlador_cifradores->metodo);
 }
-*/

@@ -17,8 +17,30 @@ int main(int argc, char const *argv[])
 	printf("key: %s\n", argv[4]);
 	printf("stdin: %s\n", argv[5]);
 
-	//struct ControladorCifradoresStruct controlador_cifradores_struct;
-	//cifradores_t cifradores = &cifradores_struct;
+	printf("%s\n\n\n", argv[3]);
+	printf("%ld\n", (strlen(argv[3]) + 1));
+
+	char *metodo = malloc(strlen(argv[3])+1);
+	if (!metodo){
+		return -1;
+	}
+	strcpy(metodo, argv[3]);
+
+	char *key = malloc(strlen(argv[4]) + 1);
+	strcpy(key, argv[4]);
+
+	struct ControladorCifradoresStruct controlador_cifradores_struct;
+	cifradores_t cifradores = &controlador_cifradores_struct;
+
+	controlador_cifradores_init(cifradores, metodo, key);
+	
+	char *msg_a_cifrar = malloc(strlen(argv[5]) + 1);
+	char *msg_cifrado = malloc(strlen(argv[5]) + 1);
+
+	controlador_cifradores_cifrar(cifradores, msg_cifrado, msg_a_cifrar);
+
+	free(metodo);
+	free(key);
 
 	// inicializar mi cifrador
 

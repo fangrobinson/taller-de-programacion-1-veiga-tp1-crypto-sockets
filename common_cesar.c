@@ -5,6 +5,11 @@ struct CesarStruct{
 	int key;
 };
 
+#ifndef __CESAR_T__
+#define __CESAR_T__
+typedef struct CesarStruct *cesar_t;
+#endif
+
 void cesar_init(cesar_t cesar, char *key){
 	cesar->key = atoi(key);
 }
