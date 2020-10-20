@@ -58,12 +58,9 @@ void client_send_msg(client_t client, char *input){
 
 	char *buffer = malloc(client->size_of_buffer);
 
-
-
 	file_reader_init(&file_reader, input, client->size_of_buffer);
 
 	unsigned int amount_read;
-
 
 	while ((amount_read = file_reader_next(&file_reader, buffer))) {
 		int bytes_sending = 0;

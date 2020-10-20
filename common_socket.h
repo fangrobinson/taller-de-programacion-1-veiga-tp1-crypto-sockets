@@ -20,5 +20,4 @@ void socket_shutdown(socket_t *socket);
 int socket_send(socket_t *socket, const char *buffer, size_t length);
 int socket_receive(socket_t *socket, char *buffer, size_t length);
 
-
 #endif

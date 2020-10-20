@@ -54,11 +54,15 @@ int server_receive(server_t server){
 	}
 
 	char *buffer = malloc(sizeof(SIZE_OF_CHUNK));
+	if (!buffer) {
+		printf("Buffer problems\n");
+	}
 
 	while (1) {
-		int cant = socket_receive(&server->socket, buffer, SIZE_OF_CHUNK);
+		int cant = socket_receive(&socket_to_accept, buffer, SIZE_OF_CHUNK);
+		printf("BUFFER\n");
 		fwrite(buffer, 1, cant, stdout);
-		break;
+		break; //DELETE
 	}
 
 	free(buffer);

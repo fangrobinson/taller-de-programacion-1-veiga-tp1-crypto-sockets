@@ -6,11 +6,12 @@
 
 int main(int argc, char const *argv[])
 {
-	
+	/*
 	printf("server: %s\n", argv[1]);
 	printf("port: %s\n", argv[2]);
 	printf("method: %s\n", argv[3]);
 	printf("key: %s\n", argv[4]);
+	*/
 
 	char *server = malloc(strlen(argv[1]) + 1);
 	strcpy(server, argv[1]);

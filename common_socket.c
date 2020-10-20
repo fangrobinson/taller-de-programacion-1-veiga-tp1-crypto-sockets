@@ -32,12 +32,14 @@ int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
 	}
 
 	int sfd;
+	int val = 1;
 
     for (rp = results; rp != NULL; rp = rp->ai_next) {
        	sfd = socket(rp->ai_family, rp->ai_socktype,
                rp->ai_protocol);
        	if (sfd == -1)
            continue;
+		setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
        	if (bind(sfd, rp->ai_addr, rp->ai_addrlen) == 0)
            break;
     	close(sfd);
@@ -65,7 +67,7 @@ int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
 int socket_connect(socket_t *a_socket, const char *server, unsigned short port){
 
 	struct addrinfo hints;
-	struct addrinfo *results;
+	struct addrinfo *results, *rp;
 	
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_INET;
@@ -79,18 +81,28 @@ int socket_connect(socket_t *a_socket, const char *server, unsigned short port){
 		return 1;
 	}
 	
-	a_socket->socket = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
-	if (a_socket->socket == -1) {
-		freeaddrinfo(results);
-		return 1;
-	}
+	int sfd;
+	int val = 1;
 
-	int valid_connect = connect(a_socket->socket, results->ai_addr, results->ai_addrlen);
-	if (valid_connect == 1) {
-		freeaddrinfo(results);
-		socket_uninit(a_socket);
-		return 1;
-	}
+    for (rp = results; rp != NULL; rp = rp->ai_next) {
+       	sfd = socket(rp->ai_family, rp->ai_socktype,
+               rp->ai_protocol);
+       	if (sfd == -1)
+           continue;
+		setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+       	if (connect(sfd, rp->ai_addr, rp->ai_addrlen) == 0)
+           break;
+    	close(sfd);
+    }
+
+
+    if (rp == NULL) {
+    	freeaddrinfo(results);
+    	return 1;
+    }
+	
+
+    a_socket->socket = sfd;
 	
 	freeaddrinfo(results);
 	return 0;
@@ -131,8 +143,8 @@ int socket_receive(socket_t *socket, char *buffer, size_t length){
 	int socket_open = 1;
 
 	while (length > bytes_received && socket_open == 1) {
-		int bytes_to_add = recv(socket->socket, (buffer + bytes_received), 
-			length - bytes_received, MSG_NOSIGNAL);
+		int bytes_to_add = recv(socket->socket, &buffer[bytes_received], 
+			length - bytes_received, 0);
 		
 		if (bytes_to_add > 0){
 			bytes_received += bytes_to_add;
@@ -140,6 +152,5 @@ int socket_receive(socket_t *socket, char *buffer, size_t length){
 			socket_open = bytes_to_add;
 		}
 	}
-
 	return socket_open;
 }
