@@ -20,7 +20,7 @@ typedef struct ClientStruct *client_t;
 
 void client_init(client_t client, char *server, char *port, char *method, char *key);
 void client_uninit(client_t client);
-//void client_connect(client_t client);
+void client_connect(client_t client);
 void client_send_msg(client_t client, char *msg);
 
 #endif

@@ -2,11 +2,8 @@
 #include <string.h>
 #include "common_controlador_cifradores.h"
 #include "common_cesar.h"
-//#include "common_cesar.c"
 #include "common_vigenere.h"
-//#include "common_vigenere.c"
 #include "common_arc4.h"
-//#include "common_arc4.c"
 
 
 #ifndef __CONTROLADOR_CIFRADOR_T__

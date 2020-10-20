@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
 	struct ClientStruct client;
 
 	client_init(&client, server, port, metodo, key);
-	//client_connect(client);
+	client_connect(&client);
 	client_send_msg(&client, msg);
 	client_uninit(&client);
 	

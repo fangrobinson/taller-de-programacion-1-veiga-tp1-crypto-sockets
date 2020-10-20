@@ -5,7 +5,7 @@
 #include "common_socket.h"
 
 struct ServerStruct{
-	char *port;
+	unsigned short port;
 	char *method;
 	char *key;
 	unsigned int size_of_buffer;
@@ -21,6 +21,6 @@ typedef struct ServerStruct *server_t;
 void server_init(server_t server, char *port, char *method, char *key);
 void server_uninit(server_t server);
 //void server_connect(server_t server);
-void server_send_msg(server_t server, char *msg);
+int server_receive(server_t server);
 
 #endif

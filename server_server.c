@@ -13,8 +13,10 @@ typedef struct ServerStruct *server_t;
 #endif
 
 void server_init(server_t server, char *port, char *method, char *key){
+	server->port = atoi(port);
+	/*
 	server->port = malloc(strlen(port) + 1);
-	strcpy(server->port, port);
+	strcpy(server->port, port);*/
 	server->method = malloc(strlen(method) + 1);
 	strcpy(server->method, method);
 	server->key = malloc(strlen(key) + 1);
@@ -33,12 +35,26 @@ void server_init(server_t server, char *port, char *method, char *key){
 }
 void server_uninit(server_t server){
 	controlador_cifradores_uninit(server->cifradores);
+	socket_uninit(&server->socket);
 	free(server->cifradores);
-	free(server->port);
+	//free(server->port);
 	free(server->method);
 	free(server->key);
 }
 
-//void server_connect(server_t server);
+int server_receive(server_t server){
+	int connected = socket_bind_and_listen(&server->socket, server->port);
+	if (connected != 0) {
+		return 1;
+	}
 
-void server_send_msg(server_t server, char *msg);
+	socket_t socket_to_accept;
+
+	connected = socket_accept(&server->socket, &socket_to_accept);
+	if (connected != 0) {
+		return 1;
+	}
+	socket_shutdown(&server->socket);
+	socket_uninit(&server->socket);
+	return 0;
+}

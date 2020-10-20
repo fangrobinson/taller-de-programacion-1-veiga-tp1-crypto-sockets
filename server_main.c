@@ -22,11 +22,12 @@ int main(int argc, char const *argv[])
 	struct ServerStruct server;
 
 	server_init(&server, port, method, key);
-	//client_connect(client);
-	//client_send_msg(&client, msg);
+	server_receive(&server);
 	server_uninit(&server);
 
 	free(port);
 	free(method);
 	free(key);
 }
+
+
