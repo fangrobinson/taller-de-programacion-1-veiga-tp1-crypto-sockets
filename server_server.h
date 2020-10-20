@@ -20,7 +20,6 @@ typedef struct ServerStruct *server_t;
 
 void server_init(server_t server, char *port, char *method, char *key);
 void server_uninit(server_t server);
-//void server_connect(server_t server);
 int server_receive(server_t server);
 
 #endif

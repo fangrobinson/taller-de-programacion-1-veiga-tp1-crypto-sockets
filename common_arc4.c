@@ -2,13 +2,6 @@
 #include <string.h>
 #include "common_arc4.h"
 
-/*struct Arc4Struct{
-	unsigned char s_box[256];
-	unsigned int i, j;
-	char *key;
-	unsigned int key_lenght;
-};*/
-
 void s_box_swap(unsigned char *s, unsigned int i, unsigned int j) {
     unsigned char temp = s[i];
     s[i] = s[j];
