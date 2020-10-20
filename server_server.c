@@ -19,7 +19,29 @@ typedef struct ServerStruct *server_t;
 #endif
 
 
-void server_init(server_t server, char *port, char *method, char *key);
-void server_uninit(server_t server);
+void server_init(server_t server, char *port, char *method, char *key){
+	server->port = malloc(strlen(port) + 1);
+	strcpy(server->port, port);
+	server->method = malloc(strlen(method) + 1);
+	strcpy(server->method, method);
+	server->key = malloc(strlen(key) + 1);
+	strcpy(server->key, key);
+
+	// HARDCODED SIZE OF CHUNK:
+	server->size_of_buffer = 64;
+
+	server->cifradores = malloc(sizeof(struct ControladorCifradoresStruct));
+
+	controlador_cifradores_init(server->cifradores, server->method, 
+								server->key);
+
+}
+void server_uninit(server_t server){
+	controlador_cifradores_uninit(server->cifradores);
+	free(server->cifradores);
+	free(server->port);
+	free(server->method);
+	free(server->key);
+}
 //void server_connect(server_t server);
 void server_send_msg(server_t server, char *msg);
