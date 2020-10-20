@@ -1,11 +1,17 @@
+#include <string.h>
+#include <stdio.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include "common_socket.h"
 
 void socket_init(socket_t *socket){
 
 }
+
 int socket_uninit(socket_t *socket){
 	return close(socket->socket);
 }
-
 
 int socket_bind_and_listen(socket_t *socket, unsigned short port){
 	struct addrinfo hints;
@@ -30,14 +36,14 @@ int socket_bind_and_listen(socket_t *socket, unsigned short port){
 	}
 
 	int valid_bind = bind(socket->socket, results->ai_addr, results->ai_addrlen);
-	if (valid_bind != SUCCESS) {
+	if (valid_bind != 0) {
 		freeaddrinfo(results);
 		socket_uninit(socket);
 		return 1;
 	}
 	
-	int valid_listen = listen(socket->socket, MAX_CONNECTIONS);
-	if (valid_listen != SUCCESS) { 
+	int valid_listen = listen(socket->socket, 1);
+	if (valid_listen != 0) { 
 		freeaddrinfo(results);
 		socket_uninit(socket);
 		return 1;
@@ -82,7 +88,7 @@ int socket_connect(socket_t *socket, const char *server, unsigned short port){
 }
 
 int socket_accept(socket_t *socket, socket_t *socket_to_accept){
-	socket_to_accept->socket = accept(self->socket, NULL, NULL);
+	socket_to_accept->socket = accept(socket->socket, NULL, NULL);
 	if (socket_to_accept->socket == -1) {
 		socket_uninit(socket_to_accept);
 		return 1;
@@ -90,9 +96,9 @@ int socket_accept(socket_t *socket, socket_t *socket_to_accept){
 	return 0;
 }
 
-void socket_shutdown(socket_t *socket);
-
-
+void socket_shutdown(socket_t *socket){
+	shutdown(socket->socket, SHUT_RDWR);
+}
 
 int socket_send(socket_t *socket, const char *buffer, size_t length){
 	int bytes_sent = 0;
