@@ -1,4 +1,5 @@
-#define _XOPEN_SOURCE 600
+//#define _XOPEN_SOURCE 600
+#define _POSIX_C_SOURCE 200112L
 
 #include <string.h>
 #include <stdio.h>
@@ -8,9 +9,7 @@
 #include <sys/socket.h>
 #include "common_socket.h"
 
-void socket_init(socket_t *socket){
-
-}
+void socket_init(socket_t *socket){}
 
 int socket_uninit(socket_t *socket){
 	return close(socket->socket);
@@ -18,7 +17,7 @@ int socket_uninit(socket_t *socket){
 
 int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
 	struct addrinfo hints;
-	struct addrinfo *results;
+	struct addrinfo *results, *rp;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_INET;     
@@ -32,19 +31,26 @@ int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
 		return status;
 	}
 
-	a_socket->socket = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
-	if (a_socket->socket == -1) {
-		freeaddrinfo(results);
-		return 1;
-	}
+	int sfd;
 
-	int valid_bind = bind(a_socket->socket, results->ai_addr, results->ai_addrlen);
-	if (valid_bind != 0) {
-		freeaddrinfo(results);
-		socket_uninit(a_socket);
-		return 1;
-	}
+    for (rp = results; rp != NULL; rp = rp->ai_next) {
+       	sfd = socket(rp->ai_family, rp->ai_socktype,
+               rp->ai_protocol);
+       	if (sfd == -1)
+           continue;
+       	if (bind(sfd, rp->ai_addr, rp->ai_addrlen) == 0)
+           break;
+    	close(sfd);
+    }
+
+
+    if (rp == NULL) {
+    	freeaddrinfo(results);
+    	return 1;
+    }
 	
+    a_socket->socket = sfd;
+
 	int valid_listen = listen(a_socket->socket, 1);
 	if (valid_listen != 0) { 
 		freeaddrinfo(results);
@@ -120,3 +126,20 @@ int socket_send(socket_t *socket, const char *buffer, size_t length){
 	return socket_open;
 }
 
+int socket_receive(socket_t *socket, char *buffer, size_t length){
+	int bytes_received = 0;
+	int socket_open = 1;
+
+	while (length > bytes_received && socket_open == 1) {
+		int bytes_to_add = recv(socket->socket, (buffer + bytes_received), 
+			length - bytes_received, MSG_NOSIGNAL);
+		
+		if (bytes_to_add > 0){
+			bytes_received += bytes_to_add;
+		} else {
+			socket_open = bytes_to_add;
+		}
+	}
+
+	return socket_open;
+}

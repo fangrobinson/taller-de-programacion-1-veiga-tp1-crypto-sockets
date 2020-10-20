@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "common_socket.h"
-
+#define SIZE_OF_CHUNK 64
 
 #ifndef __SERVER_T__
 #define __SERVER_T__
@@ -14,9 +14,6 @@ typedef struct ServerStruct *server_t;
 
 void server_init(server_t server, char *port, char *method, char *key){
 	server->port = atoi(port);
-	/*
-	server->port = malloc(strlen(port) + 1);
-	strcpy(server->port, port);*/
 	server->method = malloc(strlen(method) + 1);
 	strcpy(server->method, method);
 	server->key = malloc(strlen(key) + 1);
@@ -35,6 +32,7 @@ void server_init(server_t server, char *port, char *method, char *key){
 }
 void server_uninit(server_t server){
 	controlador_cifradores_uninit(server->cifradores);
+	socket_shutdown(&server->socket);
 	socket_uninit(&server->socket);
 	free(server->cifradores);
 	//free(server->port);
@@ -54,7 +52,15 @@ int server_receive(server_t server){
 	if (connected != 0) {
 		return 1;
 	}
-	socket_shutdown(&server->socket);
-	socket_uninit(&server->socket);
+
+	char *buffer = malloc(sizeof(SIZE_OF_CHUNK));
+
+	while (1) {
+		int cant = socket_receive(&server->socket, buffer, SIZE_OF_CHUNK);
+		fwrite(buffer, 1, cant, stdout);
+		break;
+	}
+
+	free(buffer);
 	return 0;
 }
