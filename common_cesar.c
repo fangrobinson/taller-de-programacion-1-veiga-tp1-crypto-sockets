@@ -19,7 +19,7 @@ void cesar_uninit(cesar_t cesar){}
 void cesar_traducir(cesar_t cesar, char *s, unsigned int s_len, int mult){
 	unsigned char let;
 	int i;
-	for(i = 0; i < s_len; ++i){
+	for (i = 0; i < s_len; ++i){
 		let = s[i];
 		let = (let + (cesar->key * mult))%256;
 		s[i] = let;
