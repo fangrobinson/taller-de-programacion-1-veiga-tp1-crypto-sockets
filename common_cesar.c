@@ -9,10 +9,12 @@ void cesar_init(cesar_t cesar, char *key){
 	cesar->key = atoi(key);
 }
 
-void cesar_traducir(cesar_t cesar, char *s, int mult){
+void cesar_uninit(cesar_t cesar){}
+
+void cesar_traducir(cesar_t cesar, char *s, unsigned int s_len, int mult){
 	unsigned char let;
 	int i;
-	for(i = 0; s[i] != '\0'; ++i){
+	for(i = 0; i < s_len; ++i){
 		let = s[i];
 		let = (let + (cesar->key * mult))%256;
 		s[i] = let;
@@ -20,10 +22,10 @@ void cesar_traducir(cesar_t cesar, char *s, int mult){
 	return;
 }
 
-void cesar_cifrar(cesar_t cesar, char *s){
-	cesar_traducir(cesar, s, 1);
+void cesar_cifrar(cesar_t cesar, char *s, unsigned int s_len){
+	cesar_traducir(cesar, s, s_len, 1);
 }
 
-void cesar_descifrar(cesar_t cesar, char *s){
-	cesar_traducir(cesar, s, -1);
+void cesar_descifrar(cesar_t cesar, char *s, unsigned int s_len){
+	cesar_traducir(cesar, s, s_len, -1);
 }

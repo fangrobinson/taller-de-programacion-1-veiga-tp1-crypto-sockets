@@ -33,14 +33,14 @@ void arc4_init(arc4_t arc4, char *key){
 		arc4->s_box[i] = i;
 
 	for (i = j = 0; i < 256; i++) {
-		j = (j + key[i % arc4->key_lenght] + arc4->s_box[i]) & 255;
+		j = (j + arc4->key[i % arc4->key_lenght] + arc4->s_box[i]) & 255;
 		s_box_swap(arc4->s_box, i, j);
 	}
 
 	arc4->i = arc4->j = 0;
 }
 
-void arc4_del(arc4_t arc4){
+void arc4_uninit(arc4_t arc4){
 	free(arc4);
 }
 
@@ -53,18 +53,18 @@ unsigned char arc4_output(arc4_t arc4) {
     return arc4->s_box[(arc4->s_box[arc4->i] + arc4->s_box[arc4->j]) & 255];
 }
 
-void arc4_traducir(arc4_t arc4, char *s) {
+void arc4_traducir(arc4_t arc4, char *s, unsigned int s_len) {
 	int i;
-	for(i = 0; s[i] != '\0'; ++i){
-		s[i] = s[i] ^ arc4_output(arc4);
+	for(i = 0; i < s_len; ++i){
+		s[i] = (char)(s[i] ^ arc4_output(arc4));
 	}
 }
 
-void arc4_cifrar(arc4_t arc4, char *s){
-	arc4_traducir(arc4, s);
+void arc4_cifrar(arc4_t arc4, char *s, unsigned int s_len){
+	arc4_traducir(arc4, s, s_len);
 }
 
-void arc4_descifrar(arc4_t arc4, char *s){
+void arc4_descifrar(arc4_t arc4, char *s, unsigned int s_len){
 	arc4_init(arc4, arc4->key);
-	arc4_traducir(arc4, s);
+	arc4_traducir(arc4, s, s_len);
 }
