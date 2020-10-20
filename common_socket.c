@@ -14,6 +14,8 @@ int socket_bind_and_listen(socket_t *socket, unsigned short port){
 	char port_string[4];
 	sprintf(port_string, "%hu", port);
 	int status = getaddrinfo(0, port_string, &hints, &results);
+	freeaddrinfo(results);
+	return SUCCESS;
 
 }
 
