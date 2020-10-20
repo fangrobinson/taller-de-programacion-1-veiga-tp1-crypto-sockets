@@ -15,4 +15,8 @@ int socket_connect(socket_t *socket, const char *server, unsigned short port);
 int socket_accept(socket_t *socket, socket_t *socket_to_accept);
 void socket_shutdown(socket_t *socket);
 
+int socket_send(socket_t *socket, const char *buffer, size_t length);
+int socket_receive(socket_t *socket, char *buffer, size_t length);
+
+
 #endif
