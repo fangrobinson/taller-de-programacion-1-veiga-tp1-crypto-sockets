@@ -1,5 +1,6 @@
 #ifndef __SOCKET_H__
 #define __SOCKET_H__
+#include "common_socket.h"
 
 struct SocketStruct{
 	int socket;

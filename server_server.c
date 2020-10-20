@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "common_socket.h"
 
 
 #ifndef __SERVER_T__
@@ -26,6 +27,8 @@ void server_init(server_t server, char *port, char *method, char *key){
 
 	controlador_cifradores_init(server->cifradores, server->method, 
 								server->key);
+
+	socket_init(&server->socket);
 
 }
 void server_uninit(server_t server){

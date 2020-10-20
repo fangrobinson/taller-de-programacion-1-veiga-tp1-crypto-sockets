@@ -1,7 +1,8 @@
 #ifndef __SERVER_H__
 #define __SERVER_H__
-
+#include <stddef.h>
 #include "common_controlador_cifradores.h"
+#include "common_socket.h"
 
 struct ServerStruct{
 	char *port;
@@ -9,6 +10,7 @@ struct ServerStruct{
 	char *key;
 	unsigned int size_of_buffer;
 	cifradores_t cifradores;
+	socket_t socket;
 };
 
 #ifndef __SERVER_T__

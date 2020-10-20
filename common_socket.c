@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <netdb.h>
-
+#include <stddef.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include "common_socket.h"
