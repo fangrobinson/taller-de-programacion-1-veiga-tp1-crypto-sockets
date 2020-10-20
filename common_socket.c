@@ -65,7 +65,6 @@ int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
 }
 
 int socket_connect(socket_t *a_socket, const char *server, unsigned short port){
-
 	struct addrinfo hints;
 	struct addrinfo *results, *rp;
 	
@@ -126,8 +125,8 @@ int socket_send(socket_t *socket, const char *buffer, size_t length){
 	int socket_open = 1;
 
 	while (length >= bytes_sent && socket_open) {
-		int bytes_to_add = send(socket->socket, (buffer + bytes_sent), length - bytes_sent,
-		MSG_NOSIGNAL);
+		int bytes_to_add = send(socket->socket, (buffer + bytes_sent), 
+			length - bytes_sent, MSG_NOSIGNAL);
 		if (bytes_to_add > 0){
 			bytes_sent += bytes_to_add;
 		} else {

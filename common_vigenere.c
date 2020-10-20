@@ -2,13 +2,6 @@
 #include <string.h>
 #include "common_vigenere.h"
 
-/*
-struct VigenereStruct{
-	char *key;
-	size_t key_len;
-};
-*/
-
 void vigenere_init(vigenere_t v, char *key){
 	v->key_len = strlen(key);
 	v->key = malloc(strlen(key) + 1);

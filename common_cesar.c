@@ -2,11 +2,6 @@
 #include <stdlib.h>
 #include "common_cesar.h"
 
-/*
-struct CesarStruct{
-	int key;
-};
-*/
 #ifndef __CESAR_T__
 #define __CESAR_T__
 typedef struct CesarStruct *cesar_t;
