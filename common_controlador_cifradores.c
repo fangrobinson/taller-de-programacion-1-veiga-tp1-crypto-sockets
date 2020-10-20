@@ -6,13 +6,14 @@
 #include "common_arc4.h"
 #include "common_arc4.c"
 
+#ifndef __CONTROLADOR_CIFRADOR_T__
+#define __CONTROLADOR_CIFRADOR_T__
+
 struct ControladorCifradoresStruct{
 	void *c;
 	char *metodo;
 };
 
-#ifndef __CONTROLADOR_CIFRADOR_T__
-#define __CONTROLADOR_CIFRADOR_T__
 typedef struct ControladorCifradoresStruct *cifradores_t;
 #endif
 
