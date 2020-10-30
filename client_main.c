@@ -4,6 +4,7 @@
 #include <string.h>
 
 #define SIZE_OF_CHUNK 64
+//#define SIZE_OF_CHUNK 1
 #define ERROR 1
 #define OK 0
 
@@ -34,17 +35,4 @@ int main(int argc, char const *argv[])
     }
     client_uninit(&client);
     return OK;
-
-
-	/*
-
-	
-	struct ClientStruct client;
-
-	client_init(&client, server, port, metodo, key);
-	client_connect(&client);
-	client_send_msg(&client, NULL);
-	client_uninit(&client);
-
-	*/
 }

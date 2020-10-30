@@ -39,13 +39,24 @@ int server_run(server_t *server){
         return ERROR;
     }
     char buffer[server->buffer_size];
+    int socket_status;
+    do {
+        socket_status = socket_receive(&socket_to_accept, buffer, server->buffer_size);
+        fwrite(buffer, 1, socket_status, stdout);
+        printf("buffer received: %s\n", buffer);
+        printf("Socket Status: %d\n", socket_status);
+    } while (socket_status != 0);
+    return socket_status;
+
+    /*
     while (1) {
-        int cant = socket_receive(&socket_to_accept, buffer, server->buffer_size);
+        int status = socket_receive(&socket_to_accept, buffer, server->buffer_size);
         printf("BUFFER\n");
-        fwrite(buffer, 1, cant, stdout);
+        fwrite(buffer, 1, status, stdout);
         break;
     }
     return OK;
+    */
     /*
 	int connected = socket_bind_and_listen(&server->socket, server->port);
 	if (connected != 0) {
