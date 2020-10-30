@@ -5,6 +5,8 @@
 #include <stdlib.h>
 
 #define SIZE_OF_CHUNK 64
+#define OK 0
+#define ERROR 1
 
 int main(int argc, char const *argv[])
 {
@@ -23,12 +25,11 @@ int main(int argc, char const *argv[])
     server_t server;
 
     server_init(&server, SIZE_OF_CHUNK, port, method, key);
-
-    return 0;
-    /*
-	server_receive(&server);
-	server_uninit(&server);
-    */
+    if (server_run(&server)) {
+        return ERROR;
+    }
+    server_uninit(&server);
+    return OK;
 }
 
 

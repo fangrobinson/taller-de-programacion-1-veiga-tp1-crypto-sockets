@@ -1,5 +1,4 @@
 #include "common_controlador_cifradores.h"
-//#include "common_controlador_cifradores.c"
 #include "server_server.h"
 #include <stdio.h>
 #include <stdlib.h>

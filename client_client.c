@@ -7,44 +7,36 @@
 
 #define SIZE_OF_CHUNK 64
 
-#ifndef __CLIENT_T__
-#define __CLIENT_T__
-typedef struct ClientStruct *client_t;
-#endif
+void client_init(client_t *client, size_t buffer_size,const char *server, const char *port, const char *method,
+				const char *key){
+    client->buffer_size = buffer_size;
+	client->server = server;
+	client->port = port;
+	client->method = method;
+	client->key = key;
+
+    // init cifradores
+	//client->cifradores = malloc(sizeof(struct ControladorCifradoresStruct));
 
 
-void client_init(client_t client, char *server, char *port, char *method, 
-				char *key){
-	client->server = malloc(strlen(server) + 1);
-	strcpy(client->server, server);
-	client->port = atoi(port);
-	client->method = malloc(strlen(method) + 1);
-	strcpy(client->method, method);
-	client->key = malloc(strlen(key) + 1);
-	strcpy(client->key, key);
+	//controlador_cifradores_init(client->cifradores, client->method,
+	//							client->key);
 
-	client->size_of_buffer = SIZE_OF_CHUNK;
-
-	client->cifradores = malloc(sizeof(struct ControladorCifradoresStruct));
-
-	controlador_cifradores_init(client->cifradores, client->method, 
-								client->key);
-	socket_init(&client->socket);
+	// init socket
+	//socket_init(&client->socket);
 
 }
 
-void client_uninit(client_t client){
+void client_uninit(client_t *client){
+    return;
 	controlador_cifradores_uninit(client->cifradores);
 	socket_shutdown(&client->socket);
 	socket_uninit(&client->socket);
 	free(client->cifradores);
-	free(client->server);
-	free(client->method);
-	free(client->key);
 }
 
-
-int client_connect(client_t client){
+/*
+int client_connect(client_t *client){
 	int connected = socket_connect(&client->socket, client->server, client->port);
 	if (connected != 0) {
 		return -1;
@@ -52,7 +44,7 @@ int client_connect(client_t client){
 	return 0;
 }
 
-void client_send_msg(client_t client, char *input){
+void client_send_msg(client_t *client, char *input){
 	file_reader_t file_reader;
 
 	char *buffer = malloc(client->size_of_buffer);
@@ -72,5 +64,5 @@ void client_send_msg(client_t client, char *input){
 	file_reader_uninit(&file_reader);
 	free(buffer);
 	return;
-
 }
+*/
