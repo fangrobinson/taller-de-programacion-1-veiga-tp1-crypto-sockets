@@ -31,8 +31,8 @@ void client_uninit(client_t *client){
     socket_shutdown(&client->socket);
     socket_uninit(&client->socket);
     return;
-	controlador_cifradores_uninit(client->cifradores);
-	free(client->cifradores);
+	//controlador_cifradores_uninit(client->cifradores);
+	//free(client->cifradores);
 }
 
 int client_run(client_t *client) {

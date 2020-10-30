@@ -8,7 +8,7 @@ void s_box_swap(unsigned char *s, unsigned int i, unsigned int j) {
     s[j] = temp;
 }
 
-void arc4_set_s_box(arc4_t arc4){
+void arc4_set_s_box(arc4_t *arc4){
 	int i, j;
 
 	for (i = 0; i < 256; i++)
@@ -22,7 +22,7 @@ void arc4_set_s_box(arc4_t arc4){
 	arc4->i = arc4->j = 0;
 }
 
-void arc4_init(arc4_t arc4, char *key){
+void arc4_init(arc4_t *arc4, char *key){
 	arc4->key = malloc(strlen(key) + 1);
 	strcpy(arc4->key, key);
 	
@@ -31,11 +31,11 @@ void arc4_init(arc4_t arc4, char *key){
 	arc4_set_s_box(arc4);
 }
 
-void arc4_uninit(arc4_t arc4){
+void arc4_uninit(arc4_t *arc4){
 	free(arc4->key);
 }
 
-unsigned char arc4_output(arc4_t arc4) {
+unsigned char arc4_output(arc4_t *arc4) {
     arc4->i = (arc4->i + 1) & 255;
     arc4->j = (arc4->j + arc4->s_box[arc4->i] ) & 255;
 
@@ -44,18 +44,18 @@ unsigned char arc4_output(arc4_t arc4) {
     return arc4->s_box[(arc4->s_box[arc4->i] + arc4->s_box[arc4->j]) & 255];
 }
 
-void arc4_traducir(arc4_t arc4, char *s, unsigned int s_len) {
+void arc4_traducir(arc4_t *arc4, char *s, unsigned int s_len) {
 	int i;
 	for (i = 0; i < s_len; ++i) {
 		s[i] = (char)(s[i] ^ arc4_output(arc4));
 	}
 }
 
-void arc4_cifrar(arc4_t arc4, char *s, unsigned int s_len){
+void arc4_cifrar(arc4_t *arc4, char *s, unsigned int s_len){
 	arc4_traducir(arc4, s, s_len);
 }
 
-void arc4_descifrar(arc4_t arc4, char *s, unsigned int s_len){
+void arc4_descifrar(arc4_t *arc4, char *s, unsigned int s_len){
 	arc4_set_s_box(arc4);
 	arc4_traducir(arc4, s, s_len);
 }

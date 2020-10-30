@@ -31,7 +31,6 @@ int server_run(server_t *server){
         return ERROR;
     }
 
-
     socket_t socket_to_accept;
 
     connected = socket_accept(&server->socket, &socket_to_accept);
@@ -46,43 +45,6 @@ int server_run(server_t *server){
         printf("buffer received: %s\n", buffer);
         printf("Socket Status: %d\n", socket_status);
     } while (socket_status != 0);
+
     return socket_status;
-
-    /*
-    while (1) {
-        int status = socket_receive(&socket_to_accept, buffer, server->buffer_size);
-        printf("BUFFER\n");
-        fwrite(buffer, 1, status, stdout);
-        break;
-    }
-    return OK;
-    */
-    /*
-	int connected = socket_bind_and_listen(&server->socket, server->port);
-	if (connected != 0) {
-		return 1;
-	}
-
-	socket_t socket_to_accept;
-
-	connected = socket_accept(&server->socket, &socket_to_accept);
-	if (connected != 0) {
-		return 1;
-	}
-
-	char *buffer = malloc(sizeof(SIZE_OF_CHUNK));
-	if (!buffer) {
-		printf("Buffer problems\n");
-	}
-
-	while (1) {
-		int cant = socket_receive(&socket_to_accept, buffer, SIZE_OF_CHUNK);
-		printf("BUFFER\n");
-		fwrite(buffer, 1, cant, stdout);
-		break; //DELETE
-	}
-
-	free(buffer);
-	return 0;
-    */
 }
