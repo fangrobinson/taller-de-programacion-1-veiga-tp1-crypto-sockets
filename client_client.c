@@ -7,7 +7,6 @@
 
 #define SIZE_OF_CHUNK 64
 
-
 #ifndef __CLIENT_T__
 #define __CLIENT_T__
 typedef struct ClientStruct *client_t;

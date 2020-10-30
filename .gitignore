@@ -1,0 +1,9 @@
+# object code;
+*.o
+
+# CLion project
+.idea/
+
+# specific executables
+client
+server

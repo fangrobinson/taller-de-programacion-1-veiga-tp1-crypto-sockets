@@ -7,40 +7,25 @@
 #include "common_socket.h"
 #define SIZE_OF_CHUNK 64
 
-#ifndef __SERVER_T__
-#define __SERVER_T__
-typedef struct ServerStruct *server_t;
-#endif
-
-void server_init(server_t server, char *port, char *method, char *key){
-	server->port = atoi(port);
-	server->method = malloc(strlen(method) + 1);
-	strcpy(server->method, method);
-	server->key = malloc(strlen(key) + 1);
-	strcpy(server->key, key);
-
-	// HARDCODED SIZE OF CHUNK:
-	server->size_of_buffer = 64;
-
-	server->cifradores = malloc(sizeof(struct ControladorCifradoresStruct));
-
-	controlador_cifradores_init(server->cifradores, server->method, 
-								server->key);
-
-	socket_init(&server->socket);
-
-}
-void server_uninit(server_t server){
-	controlador_cifradores_uninit(server->cifradores);
-	socket_shutdown(&server->socket);
-	socket_uninit(&server->socket);
-	free(server->cifradores);
-	//free(server->port);
-	free(server->method);
-	free(server->key);
+void server_init(server_t *server, size_t buffer_size, const char *port, const char *method, const char *key) {
+    server->buffer_size = buffer_size;
+    server->port = port;
+    server->method = method;
+    server->key = key;
+    //iniciar controlador de cifradores;
+    //iniciar socket;
 }
 
-int server_receive(server_t server){
+void server_uninit(server_t *server){
+	//controlador_cifradores_uninit(server->cifradores);
+	//socket_shutdown(&server->socket);
+	//socket_uninit(&server->socket);
+	//free(server->cifradores);
+}
+
+int server_run(server_t *server){
+    return 0;
+    /*
 	int connected = socket_bind_and_listen(&server->socket, server->port);
 	if (connected != 0) {
 		return 1;
@@ -67,4 +52,5 @@ int server_receive(server_t server){
 
 	free(buffer);
 	return 0;
+    */
 }

@@ -4,22 +4,17 @@
 #include "common_controlador_cifradores.h"
 #include "common_socket.h"
 
-struct ServerStruct{
-	unsigned short port;
-	char *method;
-	char *key;
-	unsigned int size_of_buffer;
+typedef struct ServerStruct{
+	const char *port;
+	const char *method;
+	const char *key;
+	size_t buffer_size;
 	cifradores_t cifradores;
 	socket_t socket;
-};
+} server_t;
 
-#ifndef __SERVER_T__
-#define __SERVER_T__
-typedef struct ServerStruct *server_t;
-#endif
-
-void server_init(server_t server, char *port, char *method, char *key);
-void server_uninit(server_t server);
-int server_receive(server_t server);
+void server_init(server_t *server, size_t buffer_size, const char *port, const char *method, const char *key);
+void server_uninit(server_t *server);
+int server_run(server_t *server);
 
 #endif

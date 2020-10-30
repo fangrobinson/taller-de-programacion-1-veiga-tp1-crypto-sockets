@@ -126,7 +126,7 @@ int socket_send(socket_t *socket, const char *buffer, size_t length){
 
 	while (length >= bytes_sent && socket_open) {
 		int bytes_to_add = send(socket->socket, (buffer + bytes_sent), 
-			length - bytes_sent, MSG_NOSIGNAL);
+			length - bytes_sent, 0); //MSG_NOSIGNAL
 		if (bytes_to_add > 0){
 			bytes_sent += bytes_to_add;
 		} else {

@@ -4,27 +4,31 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define SIZE_OF_CHUNK 64
+
 int main(int argc, char const *argv[])
 {
+    if (argc != 4) {
+        printf("Cantidad de argumentos incorrecta \n");
+        return 0;
+    }
+    const char *port = argv[1];
+    const char *method = argv[2] + 9;
+    const char *key = argv[3] + 6;
 
-	char *port = malloc(strlen(argv[1]) + 1);
-	snprintf(port, strlen(argv[1]) + 1,"%s", argv[1]);
+    printf("%s\n", port);
+    printf("%s\n", method);
+    printf("%s\n", key);
 
-	char *method = malloc(strlen(argv[2]) + 1);
-	snprintf(method, strlen(argv[2]) + 1,"%s", argv[2]);
+    server_t server;
 
-	char *key = malloc(strlen(argv[3]) + 1);
-	snprintf(key, strlen(argv[3]) + 1,"%s", argv[3]);
+    server_init(&server, SIZE_OF_CHUNK, port, method, key);
 
-	struct ServerStruct server;
-
-	server_init(&server, port, method, key);
+    return 0;
+    /*
 	server_receive(&server);
 	server_uninit(&server);
-
-	free(port);
-	free(method);
-	free(key);
+    */
 }
 
 
