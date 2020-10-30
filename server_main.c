@@ -26,6 +26,8 @@ int main(int argc, char const *argv[])
 
     server_init(&server, SIZE_OF_CHUNK, port, method, key);
     if (server_run(&server)) {
+        server_uninit(&server);
+        printf("ERROR SERVER - RUN\n");
         return ERROR;
     }
     server_uninit(&server);

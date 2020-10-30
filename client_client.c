@@ -35,6 +35,11 @@ void client_uninit(client_t *client){
 	free(client->cifradores);
 }
 
+int client_run(client_t *client) {
+    return 0;
+}
+
+
 /*
 int client_connect(client_t *client){
 	int connected = socket_connect(&client->socket, client->server, client->port);

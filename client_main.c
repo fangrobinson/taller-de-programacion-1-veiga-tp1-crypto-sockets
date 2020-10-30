@@ -25,6 +25,14 @@ int main(int argc, char const *argv[])
     printf("%s\n", method);
     printf("%s\n", key);
 
+    client_t client;
+    client_init(&client, SIZE_OF_CHUNK, host, port, method, key);
+    if (client_run(&client)) {
+        client_uninit(&client);
+        printf("ERROR CLIENT - RUN\n");
+        return ERROR;
+    }
+    client_uninit(&client);
     return OK;
 
 
