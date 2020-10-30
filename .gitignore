@@ -7,3 +7,6 @@
 # specific executables
 client
 server
+
+# for testing
+*.txt

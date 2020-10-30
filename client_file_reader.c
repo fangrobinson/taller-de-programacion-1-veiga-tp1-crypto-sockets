@@ -1,6 +1,6 @@
 #include "client_file_reader.h"
 
-int file_reader_init(file_reader_t *self, const char *file_name, 
+int file_reader_init(file_reader_t *self,
 					const unsigned int buffer_size){
 	self->fp = stdin;
 	self->buffer_size = buffer_size;

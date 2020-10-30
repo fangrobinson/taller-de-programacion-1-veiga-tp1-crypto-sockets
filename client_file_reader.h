@@ -11,7 +11,7 @@ typedef struct {
 
 
 int file_reader_init(file_reader_t *self,
-	const char *file_name, const unsigned int buffer_size);
+	const unsigned int buffer_size);
 
 int file_reader_uninit(file_reader_t *self);
 

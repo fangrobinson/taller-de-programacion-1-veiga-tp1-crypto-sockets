@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "common_socket.h"
-#define SIZE_OF_CHUNK 64
+
+#define OK 0
+#define ERROR 1
 
 void server_init(server_t *server, size_t buffer_size, const char *port, const char *method, const char *key) {
     server->buffer_size = buffer_size;
@@ -16,14 +18,34 @@ void server_init(server_t *server, size_t buffer_size, const char *port, const c
 }
 
 void server_uninit(server_t *server){
-	//controlador_cifradores_uninit(server->cifradores);
-	//socket_shutdown(&server->socket);
-	//socket_uninit(&server->socket);
+    socket_shutdown(&server->socket);
+    socket_uninit(&server->socket);
+    return;
+    //controlador_cifradores_uninit(server->cifradores);
 	//free(server->cifradores);
 }
 
 int server_run(server_t *server){
-    return 0;
+    int connected = socket_bind_and_listen(&server->socket, server->port);
+    if (connected != OK) {
+        return ERROR;
+    }
+
+
+    socket_t socket_to_accept;
+
+    connected = socket_accept(&server->socket, &socket_to_accept);
+    if (connected != OK) {
+        return ERROR;
+    }
+    char buffer[server->buffer_size];
+    while (1) {
+        int cant = socket_receive(&socket_to_accept, buffer, server->buffer_size);
+        printf("BUFFER\n");
+        fwrite(buffer, 1, cant, stdout);
+        break;
+    }
+    return OK;
     /*
 	int connected = socket_bind_and_listen(&server->socket, server->port);
 	if (connected != 0) {

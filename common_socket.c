@@ -15,7 +15,7 @@ int socket_uninit(socket_t *socket){
 	return close(socket->socket);
 }
 
-int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
+int socket_bind_and_listen(socket_t *a_socket, const char *port){
 	struct addrinfo hints;
 	struct addrinfo *results, *rp;
 
@@ -24,9 +24,7 @@ int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
 	hints.ai_socktype = SOCK_STREAM; 
 	hints.ai_flags = AI_PASSIVE;
 
-	char port_string[4];
-	sprintf(port_string, "%hu", port);
-	int status = getaddrinfo(0, port_string, &hints, &results);
+	int status = getaddrinfo(0, port, &hints, &results);
 	if (status == 1) {
 		return status;
 	}
@@ -64,7 +62,7 @@ int socket_bind_and_listen(socket_t *a_socket, unsigned short port){
 	return 0;
 }
 
-int socket_connect(socket_t *a_socket, const char *server, unsigned short port){
+int socket_connect(socket_t *a_socket, const char *server, const char *port){
 	struct addrinfo hints;
 	struct addrinfo *results, *rp;
 	
@@ -72,10 +70,8 @@ int socket_connect(socket_t *a_socket, const char *server, unsigned short port){
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = 0;
-	
-	char port_string[4];
-	sprintf(port_string, "%d", port);
-	int status = getaddrinfo(server, port_string, &hints, &results);
+
+	int status = getaddrinfo(server, port, &hints, &results);
 	if (status == 1) {
 		return 1;
 	}
