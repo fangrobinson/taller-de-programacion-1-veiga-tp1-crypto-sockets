@@ -147,5 +147,5 @@ int socket_receive(socket_t *socket, char *buffer, size_t length){
 			socket_open = bytes_to_add;
 		}
 	}
-	return socket_open;
+	return bytes_received;
 }

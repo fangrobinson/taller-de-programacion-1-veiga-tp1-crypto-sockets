@@ -19,20 +19,14 @@ void client_init(client_t *client, size_t buffer_size,const char *server, const 
 
     socket_init(&client->socket);
 
-    // init cifradores
-	//client->cifradores = malloc(sizeof(struct ControladorCifradoresStruct));
-
-
-	//controlador_cifradores_init(client->cifradores, client->method,
-	//							client->key);
+	controlador_cifradores_init(&client->cifradores, client->method,
+								client->key);
 }
 
 void client_uninit(client_t *client){
     socket_shutdown(&client->socket);
     socket_uninit(&client->socket);
-    return;
-	//controlador_cifradores_uninit(client->cifradores);
-	//free(client->cifradores);
+    controlador_cifradores_uninit(&client->cifradores);
 }
 
 int client_run(client_t *client) {
@@ -48,7 +42,7 @@ int client_run(client_t *client) {
     int socket_open = 1;
     while ((amount_read = file_reader_next(&file_reader, buffer)) && socket_open) {
         printf("AMOUNT READ: %d\n", amount_read);
-        //controlador_cifradores_cifrar(client->cifradores, buffer, client->size_of_buffer);
+        controlador_cifradores_cifrar(&client->cifradores, buffer, amount_read);
         printf("%s\n", buffer);
         socket_open = socket_send(&client->socket, buffer, amount_read);
         /*if (!socket_open) {

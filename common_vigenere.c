@@ -2,7 +2,8 @@
 #include <string.h>
 #include "common_vigenere.h"
 
-void vigenere_init(vigenere_t *v, char *key){
+void vigenere_init(vigenere_t *v, const char *key){
+    v->current_pos = 0;
 	v->key_len = strlen(key);
 	v->key = malloc(strlen(key) + 1);
 	strcpy(v->key, key);

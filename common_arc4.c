@@ -22,7 +22,7 @@ void arc4_set_s_box(arc4_t *arc4){
 	arc4->i = arc4->j = 0;
 }
 
-void arc4_init(arc4_t *arc4, char *key){
+void arc4_init(arc4_t *arc4, const char *key){
 	arc4->key = malloc(strlen(key) + 1);
 	strcpy(arc4->key, key);
 	

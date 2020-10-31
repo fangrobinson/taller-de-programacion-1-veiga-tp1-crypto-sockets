@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "common_cesar.h"
 
-void cesar_init(cesar_t *cesar, char *key){
+void cesar_init(cesar_t *cesar, const char *key){
 	cesar->key = atoi(key);
 }
 

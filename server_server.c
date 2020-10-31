@@ -13,16 +13,17 @@ void server_init(server_t *server, size_t buffer_size, const char *port, const c
     server->port = port;
     server->method = method;
     server->key = key;
-    //iniciar controlador de cifradores;
-    //iniciar socket;
+
+    socket_init(&server->socket);
+
+    controlador_cifradores_init(&server->cifradores, server->method,
+                                server->key);
 }
 
 void server_uninit(server_t *server){
     socket_shutdown(&server->socket);
     socket_uninit(&server->socket);
-    return;
-    //controlador_cifradores_uninit(server->cifradores);
-	//free(server->cifradores);
+    controlador_cifradores_uninit(&server->cifradores);
 }
 
 int server_run(server_t *server){
@@ -38,13 +39,14 @@ int server_run(server_t *server){
         return ERROR;
     }
     char buffer[server->buffer_size];
-    int socket_status;
+    int bytes_recibidos;
     do {
-        socket_status = socket_receive(&socket_to_accept, buffer, server->buffer_size);
-        fwrite(buffer, 1, socket_status, stdout);
-        printf("buffer received: %s\n", buffer);
-        printf("Socket Status: %d\n", socket_status);
-    } while (socket_status != 0);
+        bytes_recibidos = socket_receive(&socket_to_accept, buffer, server->buffer_size);
+        printf("buffer received:\n%s\n", buffer);
+        controlador_cifradores_descifrar(&server->cifradores, buffer, bytes_recibidos);
+        fwrite(buffer, 1, bytes_recibidos, stdout);
+        printf("Bytes Recibidos: %d\n", bytes_recibidos);
+    } while (bytes_recibidos == server->buffer_size);
 
-    return socket_status;
+    return OK;
 }
