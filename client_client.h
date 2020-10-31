@@ -15,8 +15,12 @@ typedef struct ClientStruct{
 } client_t;
 
 
-void client_init(client_t *client, size_t buffer_size,const char *server, const char *port,
-                 const char *method, const char *key);
+void client_init(client_t *client, 
+						size_t buffer_size,
+						const char *server, 
+						const char *port,
+                 		const char *method, 
+                 		const char *key);
 void client_uninit(client_t *client);
 int client_run(client_t *client);
 //int client_connect(client_t *client);

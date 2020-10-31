@@ -5,8 +5,10 @@
 #include "common_vigenere.h"
 #include "common_arc4.h"
 
-void controlador_cifradores_init_por_metodo(cifradores_t *controlador_cifradores,
-											const char *metodo, const char *key){
+void controlador_cifradores_init_por_metodo(
+						cifradores_t *controlador_cifradores,
+						const char *metodo, 
+						const char *key){
 	if (strcmp(metodo, "cesar") == 0){
 		controlador_cifradores->c = malloc(sizeof(cesar_t));
 		cesar_init((cesar_t *) controlador_cifradores->c, key);
@@ -47,7 +49,9 @@ void controlador_cifradores_uninit(cifradores_t *controlador_cifradores){
 	controlador_cifradores_uninit_por_metodo(controlador_cifradores);
 }
 
-void controlador_cifradores_cifrar(cifradores_t *cifradores, char *msg, unsigned int str_len){
+void controlador_cifradores_cifrar(cifradores_t *cifradores, 
+										char *msg, 
+										unsigned int str_len){
 	if (strcmp(cifradores->metodo, "cesar") == 0){
 		cesar_cifrar((cesar_t *) cifradores->c, msg, str_len);
 	}
@@ -59,7 +63,9 @@ void controlador_cifradores_cifrar(cifradores_t *cifradores, char *msg, unsigned
 	}
 }
 
-void controlador_cifradores_descifrar(cifradores_t *cifradores, char *msg, unsigned int str_len){
+void controlador_cifradores_descifrar(cifradores_t *cifradores, 
+										char *msg, 
+										unsigned int str_len){
 	if (strcmp(cifradores->metodo, "cesar") == 0){
 		cesar_descifrar((cesar_t *) cifradores->c, msg, str_len);
 	}

@@ -9,8 +9,11 @@
 #define ERROR 1
 #define SIZE_OF_CHUNK 64
 
-void client_init(client_t *client, size_t buffer_size,const char *server, const char *port, const char *method,
-				const char *key){
+void client_init(client_t *client, size_t buffer_size, 
+                    const char *server, 
+                    const char *port, 
+                    const char *method,
+				    const char *key){
     client->buffer_size = buffer_size;
 	client->server = server;
 	client->port = port;
@@ -30,7 +33,8 @@ void client_uninit(client_t *client){
 }
 
 int client_run(client_t *client) {
-    int connected = socket_connect(&client->socket, client->server, client->port);
+    int connected = socket_connect(&client->socket, 
+                                    client->server, client->port);
     if (connected != OK) {
         return ERROR;
     }
@@ -40,7 +44,8 @@ int client_run(client_t *client) {
     file_reader_init(&file_reader, client->buffer_size);
     unsigned int amount_read;
     int socket_open = 1;
-    while ((amount_read = file_reader_next(&file_reader, buffer)) && socket_open) {
+    while ((amount_read = file_reader_next(&file_reader, buffer)) 
+                        && socket_open) {
         //printf("AMOUNT READ: %d\n", amount_read);
         controlador_cifradores_cifrar(&client->cifradores, buffer, amount_read);
         //printf("%s\n", buffer);
