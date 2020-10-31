@@ -8,7 +8,11 @@
 #define OK 0
 #define ERROR 1
 
-void server_init(server_t *server, size_t buffer_size, const char *port, const char *method, const char *key) {
+void server_init(server_t *server, 
+                    const size_t buffer_size, 
+                    const char *port, 
+                    const char *method, 
+                    const char *key) {
     server->buffer_size = buffer_size;
     server->port = port;
     server->method = method;
@@ -41,9 +45,11 @@ int server_run(server_t *server){
     char buffer[server->buffer_size];
     int bytes_recibidos;
     do {
-        bytes_recibidos = socket_receive(&socket_to_accept, buffer, server->buffer_size);
+        bytes_recibidos = socket_receive(&socket_to_accept, 
+                                buffer, server->buffer_size);
         //printf("buffer received:\n%s\n", buffer);
-        controlador_cifradores_descifrar(&server->cifradores, buffer, bytes_recibidos);
+        controlador_cifradores_descifrar(&server->cifradores, buffer, 
+                                bytes_recibidos);
         fwrite(buffer, 1, bytes_recibidos, stdout);
         //printf("Bytes Recibidos: %d\n", bytes_recibidos);
     } while (bytes_recibidos == server->buffer_size);

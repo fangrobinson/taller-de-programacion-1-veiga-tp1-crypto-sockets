@@ -8,7 +8,7 @@ typedef struct ServerStruct{
 	const char *port;
 	const char *method;
 	const char *key;
-	size_t buffer_size;
+	const size_t buffer_size;
 	cifradores_t cifradores;
 	socket_t socket;
 } server_t;
