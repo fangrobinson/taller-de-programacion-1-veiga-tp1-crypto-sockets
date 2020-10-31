@@ -21,10 +21,12 @@ int main(int argc, char const *argv[])
     const char *method = argv[3] + 9;
     const char *key = argv[4] + 6;
 
+    /*
     printf("%s\n", host);
     printf("%s\n", port);
     printf("%s\n", method);
     printf("%s\n", key);
+    */
 
     client_t client;
     client_init(&client, SIZE_OF_CHUNK, host, port, method, key);

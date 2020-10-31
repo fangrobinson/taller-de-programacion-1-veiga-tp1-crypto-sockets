@@ -103,7 +103,7 @@ int socket_connect(socket_t *a_socket, const char *server, const char *port){
 	return 0;
 }
 
-int socket_accept(socket_t *socket, socket_t *socket_to_accept){
+int socket_accept(socket_t *socket, socket_t *socket_to_accept) {
 	socket_to_accept->socket = accept(socket->socket, NULL, NULL);
 	if (socket_to_accept->socket == -1) {
 		socket_uninit(socket_to_accept);

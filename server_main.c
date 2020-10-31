@@ -19,9 +19,11 @@ int main(int argc, char const *argv[])
     const char *method = argv[2] + 9;
     const char *key = argv[3] + 6;
 
+    /*
     printf("%s\n", port);
     printf("%s\n", method);
     printf("%s\n", key);
+    */
 
     server_t server;
 
