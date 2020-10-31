@@ -38,15 +38,13 @@ void controlador_cifradores_uninit_por_metodo(
 
 void controlador_cifradores_init(cifradores_t *controlador_cifradores,
 	                            const char *metodo, const char *key){
-	controlador_cifradores->metodo = malloc(strlen(metodo) + 1);
-	strcpy(controlador_cifradores->metodo, metodo);
+	controlador_cifradores->metodo = metodo;
 	controlador_cifradores_init_por_metodo(controlador_cifradores, 
 		                                   metodo, key);
 }
 
 void controlador_cifradores_uninit(cifradores_t *controlador_cifradores){
 	controlador_cifradores_uninit_por_metodo(controlador_cifradores);
-	free(controlador_cifradores->metodo);	
 }
 
 void controlador_cifradores_cifrar(cifradores_t *cifradores, char *msg, unsigned int str_len){

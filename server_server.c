@@ -9,7 +9,7 @@
 #define ERROR 1
 
 void server_init(server_t *server, 
-                    const size_t buffer_size, 
+                    size_t buffer_size, 
                     const char *port, 
                     const char *method, 
                     const char *key) {

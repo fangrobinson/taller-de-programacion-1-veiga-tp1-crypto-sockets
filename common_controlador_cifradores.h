@@ -3,7 +3,7 @@
 
 typedef struct ControladorCifradoresStruct{
 	void *c;
-	char *metodo;
+	const char *metodo;
 } cifradores_t;
 
 void controlador_cifradores_init(cifradores_t *cifradores, const char *metodo,
