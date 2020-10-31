@@ -9,12 +9,9 @@ void cesar_init(cesar_t *cesar, const char *key){
 void cesar_uninit(cesar_t *cesar){}
 
 void cesar_traducir(cesar_t *cesar, char *s, unsigned int s_len, int mult){
-	unsigned char let;
 	int i;
 	for (i = 0; i < s_len; ++i) {
-		let = s[i];
-		let = (let + (cesar->key * mult))%256;
-		s[i] = let;
+		s[i] = (s[i] + (cesar->key * mult)) % 256;
 	}
 	return;
 }
