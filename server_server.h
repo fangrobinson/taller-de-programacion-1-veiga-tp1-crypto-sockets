@@ -19,6 +19,9 @@ void server_init(server_t *server,
 					const char *method, 
 					const char *key);
 void server_uninit(server_t *server);
+
+// se reciben y descifran mensajes de chunks de buffer_size
+// el mensaje es impreso en la salida estandar
 int server_run(server_t *server);
 
 #endif

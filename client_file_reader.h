@@ -15,6 +15,9 @@ int file_reader_init(file_reader_t *self,
 
 int file_reader_uninit(file_reader_t *self);
 
+// mueve al buffer los contenidos del FILE de a chunks con buffer_size
+// devuelve la cantidad de bytes escritos en buffer
+// o 0 en feof
 int file_reader_next(file_reader_t *self, char *buffer);
 
 #endif

@@ -10,7 +10,13 @@ typedef struct Arc4Struct{
 
 void arc4_init(arc4_t *arc4, const char *key);
 void arc4_uninit(arc4_t *arc4);
+
+// cifra los contenidos del buffer s de largo s_len de acuerdo a arc4
+// el cifrado se realiza inplace
 void arc4_cifrar(arc4_t *arc4, char *s, unsigned int s_len);
+
+// descifra los contenidos del buffer s de largo s_len de acuerdo a arc4
+// el descifrado se realiza inplace
 void arc4_descifrar(arc4_t *arc4, char *s, unsigned int s_len);
 
 #endif

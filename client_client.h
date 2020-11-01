@@ -22,6 +22,9 @@ void client_init(client_t *client,
                  		const char *method, 
                  		const char *key);
 void client_uninit(client_t *client);
+
+// se utiliza un fileReader para leer de entrada estandar
+// se cifran y envian los mensajes de chunks de buffer_size
 int client_run(client_t *client);
 
 #endif
