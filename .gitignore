@@ -10,3 +10,8 @@ server
 
 # for testing
 *.txt
+
+# cpp lint
+cpplint.py
+execute.sh
+filter_options
