@@ -52,6 +52,5 @@ void arc4_cifrar(arc4_t *arc4, char *s, unsigned int s_len){
 }
 
 void arc4_descifrar(arc4_t *arc4, char *s, unsigned int s_len){
-	arc4_set_s_box(arc4);
 	arc4_traducir(arc4, s, s_len);
 }

@@ -37,22 +37,16 @@ int client_run(client_t *client) {
     if (connected != OK) {
         return ERROR;
     }
-    //printf("CONECTADO");
-    //char buffer[client->buffer_size];
     char *buffer = malloc(client->buffer_size);
     file_reader_t file_reader;
     file_reader_init(&file_reader, client->buffer_size);
     unsigned int amount_read;
-    int socket_open = 1;
-    while ((amount_read = file_reader_next(&file_reader, buffer)) 
-                        && socket_open) {
-        //printf("AMOUNT READ: %d\n", amount_read);
+    int bytes_sent = 1;
+    amount_read = file_reader_next(&file_reader, buffer);
+    while ((amount_read > 0) && (bytes_sent > 0)) { //&& socket_open
         controlador_cifradores_cifrar(&client->cifradores, buffer, amount_read);
-        //printf("%s\n", buffer);
-        socket_open = socket_send(&client->socket, buffer, amount_read);
-        /*if (!socket_open) {
-            return ERROR;
-        }*/
+        bytes_sent = socket_send(&client->socket, buffer, amount_read);
+        amount_read = file_reader_next(&file_reader, buffer);
     }
     free(buffer);
     file_reader_uninit(&file_reader);

@@ -4,11 +4,8 @@
 #include <string.h>
 
 #define SIZE_OF_CHUNK 64
-//#define SIZE_OF_CHUNK 1
 #define ERROR 1
 #define OK 0
-
-// ./client 127.0.0.1 8080 --method=cesar --key=5 < __client_stdin__
 
 int main(int argc, char const *argv[])
 {
@@ -20,13 +17,6 @@ int main(int argc, char const *argv[])
     const char *port = argv[2];
     const char *method = argv[3] + 9;
     const char *key = argv[4] + 6;
-
-    /*
-    printf("%s\n", host);
-    printf("%s\n", port);
-    printf("%s\n", method);
-    printf("%s\n", key);
-    */
 
     client_t client;
     client_init(&client, SIZE_OF_CHUNK, host, port, method, key);

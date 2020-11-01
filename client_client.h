@@ -23,7 +23,5 @@ void client_init(client_t *client,
                  		const char *key);
 void client_uninit(client_t *client);
 int client_run(client_t *client);
-//int client_connect(client_t *client);
-//void client_send_msg(client_t *client, char *msg);
 
 #endif

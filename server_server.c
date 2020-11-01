@@ -43,18 +43,19 @@ int server_run(server_t *server){
         return ERROR;
     }
 
-    //char buffer[server->buffer_size];
     char *buffer = malloc(server->buffer_size);
     int bytes_recibidos;
+
     do {
         bytes_recibidos = socket_receive(&socket_to_accept, 
                                 buffer, server->buffer_size);
-        //printf("buffer received:\n%s\n", buffer);
         controlador_cifradores_descifrar(&server->cifradores, buffer, 
                                 bytes_recibidos);
         fwrite(buffer, 1, bytes_recibidos, stdout);
-        //printf("Bytes Recibidos: %d\n", bytes_recibidos);
     } while (bytes_recibidos == server->buffer_size);
+    
+    socket_shutdown(&socket_to_accept);
+    socket_uninit(&socket_to_accept);
     free(buffer);
     return OK;
 }

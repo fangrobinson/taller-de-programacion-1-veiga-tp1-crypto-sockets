@@ -12,7 +12,9 @@ void vigenere_uninit(vigenere_t *v){}
 
 void vigenere_traducir_cambio_letra(vigenere_t *v, char *s, int i, int mult){
 	unsigned char string_let = s[i];
-	unsigned char key_let = v->key[i % v->key_len];
+	unsigned char key_let = v->key[v->current_pos];
+	v->current_pos++;
+	v->current_pos = v->current_pos % v->key_len;
 	string_let = (string_let + (key_let * mult))%256;
 	s[i] = string_let;
 }

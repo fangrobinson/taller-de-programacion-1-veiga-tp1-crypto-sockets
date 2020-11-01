@@ -10,6 +10,11 @@ server
 
 # for testing
 *.txt
+__client_1_args__
+__client_1_stdin__
+__server_args__
+__server_stdout__
+*.dump
 
 # cpp lint
 cpplint.py

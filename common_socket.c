@@ -122,15 +122,17 @@ int socket_send(socket_t *socket, const char *buffer, size_t length){
 
 	while (length >= bytes_sent && socket_open) {
 		int bytes_to_add = send(socket->socket, (buffer + bytes_sent), 
-			length - bytes_sent, 0); //MSG_NOSIGNAL
+			length - bytes_sent, 0);
 		if (bytes_to_add > 0){
 			bytes_sent += bytes_to_add;
-		} else {
+		} else if (bytes_to_add == 0){
 			socket_open = 0;
+		} else {
+			return -1;
 		}
 	}
 
-	return socket_open;
+	return bytes_sent;
 }
 
 int socket_receive(socket_t *socket, char *buffer, size_t length){
