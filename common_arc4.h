@@ -4,7 +4,7 @@
 typedef struct Arc4Struct{
 	unsigned char s_box[256];
 	unsigned int i, j;
-	char *key;
+	const char *key;
 	unsigned int key_lenght;
 } arc4_t;
 

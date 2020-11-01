@@ -42,7 +42,9 @@ int server_run(server_t *server){
     if (connected != OK) {
         return ERROR;
     }
-    char buffer[server->buffer_size];
+
+    //char buffer[server->buffer_size];
+    char *buffer = malloc(server->buffer_size);
     int bytes_recibidos;
     do {
         bytes_recibidos = socket_receive(&socket_to_accept, 
@@ -53,6 +55,6 @@ int server_run(server_t *server){
         fwrite(buffer, 1, bytes_recibidos, stdout);
         //printf("Bytes Recibidos: %d\n", bytes_recibidos);
     } while (bytes_recibidos == server->buffer_size);
-
+    free(buffer);
     return OK;
 }

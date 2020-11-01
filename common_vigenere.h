@@ -2,7 +2,7 @@
 #define __VIGENERE_H__
 
 typedef struct VigenereStruct{
-	char *key;
+	const char *key;
 	size_t key_len;
 	unsigned int current_pos;
 } vigenere_t;

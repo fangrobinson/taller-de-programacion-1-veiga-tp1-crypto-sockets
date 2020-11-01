@@ -5,13 +5,10 @@
 void vigenere_init(vigenere_t *v, const char *key){
     v->current_pos = 0;
 	v->key_len = strlen(key);
-	v->key = malloc(strlen(key) + 1);
-	strcpy(v->key, key);
+	v->key = key;
 }
 
-void vigenere_uninit(vigenere_t *v){
-	free(v->key);
-}
+void vigenere_uninit(vigenere_t *v){}
 
 void vigenere_traducir_cambio_letra(vigenere_t *v, char *s, int i, int mult){
 	unsigned char string_let = s[i];

@@ -7,7 +7,6 @@
 
 #define OK 0
 #define ERROR 1
-#define SIZE_OF_CHUNK 64
 
 void client_init(client_t *client, size_t buffer_size, 
                     const char *server, 
@@ -39,7 +38,8 @@ int client_run(client_t *client) {
         return ERROR;
     }
     //printf("CONECTADO");
-    char buffer[client->buffer_size];
+    //char buffer[client->buffer_size];
+    char *buffer = malloc(client->buffer_size);
     file_reader_t file_reader;
     file_reader_init(&file_reader, client->buffer_size);
     unsigned int amount_read;
@@ -54,6 +54,7 @@ int client_run(client_t *client) {
             return ERROR;
         }*/
     }
+    free(buffer);
     file_reader_uninit(&file_reader);
     return OK;
 }

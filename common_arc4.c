@@ -23,21 +23,17 @@ void arc4_set_s_box(arc4_t *arc4){
 }
 
 void arc4_init(arc4_t *arc4, const char *key){
-	arc4->key = malloc(strlen(key) + 1);
-	strcpy(arc4->key, key);
-	
+	arc4->key = key;
 	arc4->key_lenght = strlen(key);
 	
 	arc4_set_s_box(arc4);
 }
 
-void arc4_uninit(arc4_t *arc4){
-	free(arc4->key);
-}
+void arc4_uninit(arc4_t *arc4){}
 
 unsigned char arc4_output(arc4_t *arc4) {
     arc4->i = (arc4->i + 1) & 255;
-    arc4->j = (arc4->j + arc4->s_box[arc4->i] ) & 255;
+    arc4->j = (arc4->j + arc4->s_box[arc4->i]) & 255;
 
     s_box_swap(arc4->s_box, arc4->i, arc4->j);
 
